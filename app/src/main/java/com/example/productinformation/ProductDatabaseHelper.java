@@ -2,9 +2,11 @@ package com.example.productinformation;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDatabaseHelper extends SQLiteOpenHelper {
@@ -55,6 +57,19 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public List<Product> getAllProducts(){
-        
+        SQLiteDatabase database = getReadableDatabase();
+
+        Cursor productCursor = database.rawQuery("SELECT * FROM " + PRODUCTS_TABLE_NAME, null);
+        ArrayList<Product> productList = new ArrayList<>();
+        if(productCursor.moveToFirst()) {
+            do {
+                Product product = new Product(productCursor.getInt(0),productCursor.getString(1),
+                    productCursor.getString(2), productCursor.getString(3), productCursor.getDouble(4),
+                    productCursor.getString(5));
+                productList.add(product);
+            } while(productCursor.moveToNext());
+        }
+        productCursor.close();
+        return productList;
     }
 }

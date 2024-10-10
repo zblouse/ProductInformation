@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter {
+public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
     private final List<Product> products;
 
@@ -20,21 +20,20 @@ public class ProductAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product product = products.get(position);
-        ViewHolder viewHolder = (ViewHolder) holder;
 
-        viewHolder.imageTextView.setText(product.getImage());
-        viewHolder.nameTextView.setText(product.getName());
-        viewHolder.descriptionTextView.setText(product.getDescription());
-        viewHolder.priceTextView.setText("" + product.getPrice());
-        viewHolder.sellerTextView.setText(product.getSeller());
+        holder.imageTextView.setText(product.getImage());
+        holder.nameTextView.setText(product.getName());
+        holder.descriptionTextView.setText(product.getDescription());
+        holder.priceTextView.setText("" + product.getPrice());
+        holder.sellerTextView.setText(product.getSeller());
     }
 
     @Override
