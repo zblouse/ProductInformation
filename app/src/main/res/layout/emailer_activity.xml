@@ -8,18 +8,18 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/view_items_button"
+        android:id="@+id/send_email_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Selected Items"
+        android:text="Email Items"
     />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/product_list"
+        android:id="@+id/selected_product_list"
+        android:layout_below="@id/send_email_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_below="@id/view_items_button"
         tools:listitem="@layout/product_item"
     />
 

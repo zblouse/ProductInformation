@@ -1,10 +1,13 @@
 package com.example.productinformation;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,9 +16,19 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
     private final List<Product> products;
+    private final boolean clickable;
+    private final SelectedProducts selectedProducts;
+
+    public ProductAdapter(List<Product> products, SelectedProducts selectedProducts){
+        this.products = products;
+        this.clickable = true;
+        this.selectedProducts = selectedProducts;
+    }
 
     public ProductAdapter(List<Product> products){
         this.products = products;
+        this.clickable = false;
+        this.selectedProducts = new SelectedProducts();
     }
 
     @NonNull
@@ -34,6 +47,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.descriptionTextView.setText(product.getDescription());
         holder.priceTextView.setText("" + product.getPrice());
         holder.sellerTextView.setText(product.getSeller());
+        if(clickable) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    holder.selected = !holder.selected;
+                    if(holder.selected) {
+                        view.setBackgroundColor(Color.parseColor("#4CE48B"));
+                        selectedProducts.addProduct(product);
+                    } else {
+                        view.setBackgroundColor(Color.parseColor("#999999"));
+                        selectedProducts.removeProduct(product);
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -47,6 +75,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         public TextView descriptionTextView;
         public TextView priceTextView;
         public TextView sellerTextView;
+        public boolean selected;
 
         public ViewHolder(View itemView){
             super(itemView);

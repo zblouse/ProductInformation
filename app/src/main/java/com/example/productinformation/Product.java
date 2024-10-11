@@ -5,13 +5,15 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-public class Product implements Parcelable {
+import java.io.Serializable;
 
-    private int id;
+public class Product implements Parcelable, Serializable {
+
+    private Integer id;
     private String name;
     private String description;
     private String seller;
-    private double price;
+    private Double price;
     private String image;
 
     public Product(int id, String name, String description, String seller, double price, String image){
@@ -67,7 +69,7 @@ public class Product implements Parcelable {
         parcel.writeString(this.image);
     }
 
-    public int getId(){
+    public Integer getId(){
         return this.id;
     }
 
@@ -83,7 +85,7 @@ public class Product implements Parcelable {
         return this.seller;
     }
 
-    public double getPrice(){
+    public Double getPrice(){
         return this.price;
     }
 

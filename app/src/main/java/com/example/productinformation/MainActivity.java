@@ -1,6 +1,9 @@
 package com.example.productinformation;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +14,16 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
     private ProductDatabaseHelper productDatabaseHelper;
+    private SelectedProducts selectedProducts = new SelectedProducts();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             products = productDatabaseHelper.getAllProducts();
         }
 
-        ProductAdapter productAdapter = new ProductAdapter(products);
+        ProductAdapter productAdapter = new ProductAdapter(products, selectedProducts);
         RecyclerView recyclerView = findViewById(R.id.product_list);
         recyclerView.setAdapter(productAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -44,6 +52,16 @@ public class MainActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
+
+        Button button = findViewById(R.id.view_items_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendToEmailerActivityIntent = new Intent(MainActivity.this, EmailerActivity.class);
+                sendToEmailerActivityIntent.putExtra("selectedProducts", selectedProducts);
+                startActivity(sendToEmailerActivityIntent);
+            }
+        });
     }
 
     private void populateTable(){
