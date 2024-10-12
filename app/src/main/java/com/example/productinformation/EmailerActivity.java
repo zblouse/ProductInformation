@@ -1,6 +1,9 @@
 package com.example.productinformation;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +21,7 @@ public class EmailerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.emailer_activity);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -32,5 +36,32 @@ public class EmailerActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
+
+        Button sendEmailButton = findViewById(R.id.send_email_button);
+        sendEmailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendEmail(selectedProducts);
+            }
+        });
+    }
+
+    private void sendEmail(SelectedProducts selectedProducts){
+        String toEmail = "zrb5155@psu.edu";
+        String subject = "Requested Product Information";
+        String body = "";
+        for(Product product: selectedProducts.getProducts()){
+            body+="Product: " + product.getName() + "\n";
+            body+="Description: " + product.getDescription() + "\n";
+            body+="Price: " + product.getPrice() + "\n";
+            body+="Seller: " + product.getSeller() + "\n";
+        }
+
+        Intent sendEmailIntent = new Intent(Intent.ACTION_SEND);
+        sendEmailIntent.putExtra(Intent.EXTRA_EMAIL,new String[]{toEmail});
+        sendEmailIntent.putExtra(Intent.EXTRA_SUBJECT,subject);
+        sendEmailIntent.putExtra(Intent.EXTRA_TEXT, body);
+        sendEmailIntent.setType("message/rfc822");
+        startActivity(sendEmailIntent);
     }
 }
