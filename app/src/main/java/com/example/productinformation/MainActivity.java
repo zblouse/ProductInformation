@@ -1,9 +1,11 @@
 package com.example.productinformation;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ProductDatabaseHelper productDatabaseHelper;
     private SelectedProducts selectedProducts = new SelectedProducts();
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        context = this;
         productDatabaseHelper = new ProductDatabaseHelper(this);
         this.deleteDatabase(productDatabaseHelper.getDatabaseName());
         List<Product> products = productDatabaseHelper.getAllProducts();
@@ -54,9 +57,14 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sendToEmailerActivityIntent = new Intent(MainActivity.this, EmailerActivity.class);
-                sendToEmailerActivityIntent.putExtra("selectedProducts", selectedProducts);
-                startActivity(sendToEmailerActivityIntent);
+                if(selectedProducts.getProducts().size() < 3){
+                    Toast toast = Toast.makeText(context,"Select at least 3 products",Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    Intent sendToEmailerActivityIntent = new Intent(MainActivity.this, EmailerActivity.class);
+                    sendToEmailerActivityIntent.putExtra("selectedProducts", selectedProducts);
+                    startActivity(sendToEmailerActivityIntent);
+                }
             }
         });
     }
