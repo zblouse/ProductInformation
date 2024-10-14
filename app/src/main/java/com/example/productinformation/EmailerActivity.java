@@ -1,11 +1,16 @@
 package com.example.productinformation;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -15,6 +20,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class EmailerActivity extends AppCompatActivity {
+
+    Context context = this;
+
+    ActivityResultLauncher<Intent> sendEmailActivityResultLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                    (result) -> {
+                        Toast toast = Toast.makeText(context, "Email Sent.",Toast.LENGTH_SHORT);
+                        toast.show();
+                        Intent sendToMainActivityIntent = new Intent(EmailerActivity.this, MainActivity.class);
+                        startActivity(sendToMainActivityIntent);
+                    }
+            );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +79,6 @@ public class EmailerActivity extends AppCompatActivity {
         sendEmailIntent.putExtra(Intent.EXTRA_SUBJECT,subject);
         sendEmailIntent.putExtra(Intent.EXTRA_TEXT, body);
         sendEmailIntent.setType("message/rfc822");
-        startActivity(sendEmailIntent);
+        sendEmailActivityResultLauncher.launch(sendEmailIntent);
     }
 }
