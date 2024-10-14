@@ -7,6 +7,9 @@ import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 
+/**
+ * POJO for Products
+ */
 public class Product implements Parcelable, Serializable {
 
     private Integer id;

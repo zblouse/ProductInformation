@@ -1,6 +1,5 @@
 package com.example.productinformation;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,10 +18,16 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Activity that both displays the information for the selected products and starts the email
+ * application when the user clicks the Email Items button.
+ */
 public class EmailerActivity extends AppCompatActivity {
 
     Context context = this;
 
+    //This is what listens for the email activity to close. Once the email activity closes it displays
+    //the toast and returns to the main activity
     ActivityResultLauncher<Intent> sendEmailActivityResultLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                     (result) -> {
@@ -44,6 +49,7 @@ public class EmailerActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //Gets the selected products as a serializable extra from the intent, then displays them
         SelectedProducts selectedProducts = getIntent().getSerializableExtra("selectedProducts", SelectedProducts.class);
         ProductAdapter productAdapter = new ProductAdapter(selectedProducts.getProducts());
         RecyclerView recyclerView = findViewById(R.id.selected_product_list);
@@ -63,6 +69,11 @@ public class EmailerActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Formats the email and then launches the email intent, which prompts the user to select their
+     * email application of choice.
+     * @param selectedProducts
+     */
     private void sendEmail(SelectedProducts selectedProducts){
         String toEmail = "zrb5155@psu.edu";
         String subject = "Requested Product Information";

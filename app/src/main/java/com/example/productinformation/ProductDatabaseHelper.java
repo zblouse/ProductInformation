@@ -9,6 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Helper class for interacting with the product_information_database
+ */
 public class ProductDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "product_information_database";
@@ -25,6 +28,10 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * Creates the PRODUCTS_TABLE_NAME table
+     * @param database
+     */
     @Override
     public void onCreate(SQLiteDatabase database) {
         String createProductsTableQuery = "CREATE TABLE " + PRODUCTS_TABLE_NAME + "(" +
@@ -38,11 +45,21 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         database.execSQL(createProductsTableQuery);
     }
 
+    /**
+     * No-op method
+     * @param sqLiteDatabase
+     * @param i
+     * @param i1
+     */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
     }
 
+    /**
+     * Add a Product to the database
+     * @param product
+     */
     public void addProductToProductsTable(Product product){
         SQLiteDatabase database = getWritableDatabase();
 
@@ -56,6 +73,10 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         database.close();
     }
 
+    /**
+     * Returns all products in the database
+     * @return List<Product>
+     */
     public List<Product> getAllProducts(){
         SQLiteDatabase database = getReadableDatabase();
 

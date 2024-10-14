@@ -18,6 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * Main activity class that displays all items in the database as selectable items in a Recycler View
+ */
 public class MainActivity extends AppCompatActivity {
 
     private ProductDatabaseHelper productDatabaseHelper;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         context = this;
+        //Initialize database
         productDatabaseHelper = new ProductDatabaseHelper(this);
         this.deleteDatabase(productDatabaseHelper.getDatabaseName());
         List<Product> products = productDatabaseHelper.getAllProducts();
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             populateTable();
             products = productDatabaseHelper.getAllProducts();
         }
-
+        //Display products in RecyclerView
         ProductAdapter productAdapter = new ProductAdapter(products, selectedProducts);
         RecyclerView recyclerView = findViewById(R.id.product_list);
         recyclerView.setAdapter(productAdapter);
@@ -53,10 +57,13 @@ public class MainActivity extends AppCompatActivity {
                 layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
+        //Set up Button
         Button button = findViewById(R.id.view_items_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //If the user has not selected at least 3 products, we display a warning toast and
+                //do not allow them to move onto the next Activity
                 if(selectedProducts.getProducts().size() < 3){
                     Toast toast = Toast.makeText(context,"Select at least 3 products",Toast.LENGTH_SHORT);
                     toast.show();
@@ -69,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Populates the database with products
+     */
     private void populateTable(){
         Product volleyballProduct = new Product("Volleyball","A regulation size volleyball",
             "Rapid Transit Sports",15.99,"volleyball.png");
@@ -82,8 +92,11 @@ public class MainActivity extends AppCompatActivity {
         Product baseballProduct = new Product("Baseball","A regulation size baseball",
                 "Rapid Transit Sports",9.99,"baseball.png");
         productDatabaseHelper.addProductToProductsTable(baseballProduct);
-        Product hockeyStickProduct = new Product("Hockey Stick","A regulation size hockery stick",
+        Product hockeyStickProduct = new Product("Hockey Stick","A regulation size hockey stick",
                 "Rapid Transit Sports",37.99,"hockeystick.png");
         productDatabaseHelper.addProductToProductsTable(hockeyStickProduct);
+        Product runningShoesProduct = new Product("Running Shoes","Size 10 running shoes.",
+                "Rapid Transit Sports",124.99,"runningshoes.png");
+        productDatabaseHelper.addProductToProductsTable(runningShoesProduct);
     }
 }

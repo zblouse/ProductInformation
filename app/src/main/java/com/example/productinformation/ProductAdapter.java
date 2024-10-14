@@ -13,18 +13,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * RecyclerView adapter for a product
+ */
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
     private final List<Product> products;
     private final boolean clickable;
     private final SelectedProducts selectedProducts;
 
+    /**
+     * If a selected products object is passed in the constructor, we want the displayed products
+     * to be selectable(MainActivity)
+     * @param products
+     * @param selectedProducts
+     */
     public ProductAdapter(List<Product> products, SelectedProducts selectedProducts){
         this.products = products;
         this.clickable = true;
         this.selectedProducts = selectedProducts;
     }
 
+    /**
+     * If only a list of products is passed to the constructor, we do not want any of the products
+     * to be selectable(EmailerActivity)
+     * @param products
+     */
     public ProductAdapter(List<Product> products){
         this.products = products;
         this.clickable = false;
