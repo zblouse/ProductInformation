@@ -75,7 +75,7 @@ public class EmailerActivity extends AppCompatActivity {
      * @param selectedProducts
      */
     private void sendEmail(SelectedProducts selectedProducts){
-        String toEmail = "zrb5155@psu.edu";
+        String toEmail = "sweng888mobileapps@gmail.com";
         String subject = "Requested Product Information";
         String body = "";
         for(Product product: selectedProducts.getProducts()){
