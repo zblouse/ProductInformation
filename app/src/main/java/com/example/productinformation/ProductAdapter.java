@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
@@ -56,7 +57,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product product = products.get(position);
 
-        holder.imageTextView.setText(product.getImage());
+        holder.imageView.setImageResource(product.getImageId());
         holder.nameTextView.setText(product.getName());
         holder.descriptionTextView.setText(product.getDescription());
         holder.priceTextView.setText("" + product.getPrice());
@@ -84,7 +85,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView imageTextView;
+        public ImageView imageView;
         public TextView nameTextView;
         public TextView descriptionTextView;
         public TextView priceTextView;
@@ -93,7 +94,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         public ViewHolder(View itemView){
             super(itemView);
-            imageTextView = itemView.findViewById(R.id.product_image);
+            imageView = itemView.findViewById(R.id.product_image);
             nameTextView = itemView.findViewById(R.id.product_name);
             descriptionTextView = itemView.findViewById(R.id.product_description);
             priceTextView = itemView.findViewById(R.id.product_price);

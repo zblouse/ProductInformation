@@ -68,7 +68,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(KEY_DESCRIPTION, product.getDescription());
         contentValues.put(KEY_SELLER, product.getSeller());
         contentValues.put(KEY_PRICE, product.getPrice());
-        contentValues.put(KEY_IMAGE, product.getImage());
+        contentValues.put(KEY_IMAGE, product.getImageId());
         database.insert(PRODUCTS_TABLE_NAME, null, contentValues);
         database.close();
     }
@@ -86,7 +86,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
             do {
                 Product product = new Product(productCursor.getInt(0),productCursor.getString(1),
                     productCursor.getString(2), productCursor.getString(3), productCursor.getDouble(4),
-                    productCursor.getString(5));
+                    productCursor.getInt(5));
                 productList.add(product);
             } while(productCursor.moveToNext());
         }

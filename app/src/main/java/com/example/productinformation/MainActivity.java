@@ -81,22 +81,22 @@ public class MainActivity extends AppCompatActivity {
      */
     private void populateTable(){
         Product volleyballProduct = new Product("Volleyball","A regulation size volleyball",
-            "Rapid Transit Sports",15.99,"volleyball.png");
+            "Rapid Transit Sports",15.99,R.drawable.volleyball);
         productDatabaseHelper.addProductToProductsTable(volleyballProduct);
         Product basketballProduct = new Product("Basketball","A regulation size basketball",
-                "Rapid Transit Sports",19.99,"basketball.png");
+                "Rapid Transit Sports",19.99,R.drawable.basketball);
         productDatabaseHelper.addProductToProductsTable(basketballProduct);
         Product footballProduct = new Product("Football","A regulation size football",
-                "Rapid Transit Sports",18.98,"football.png");
+                "Rapid Transit Sports",18.98,R.drawable.football);
         productDatabaseHelper.addProductToProductsTable(footballProduct);
         Product baseballProduct = new Product("Baseball","A regulation size baseball",
-                "Rapid Transit Sports",9.99,"baseball.png");
+                "Rapid Transit Sports",9.99,R.drawable.football);
         productDatabaseHelper.addProductToProductsTable(baseballProduct);
         Product hockeyStickProduct = new Product("Hockey Stick","A regulation size hockey stick",
-                "Rapid Transit Sports",37.99,"hockeystick.png");
+                "Rapid Transit Sports",37.99,R.drawable.hockeystick);
         productDatabaseHelper.addProductToProductsTable(hockeyStickProduct);
         Product runningShoesProduct = new Product("Running Shoes","Size 10 running shoes.",
-                "Rapid Transit Sports",124.99,"runningshoes.png");
+                "Rapid Transit Sports",124.99,R.drawable.runningshoes);
         productDatabaseHelper.addProductToProductsTable(runningShoesProduct);
     }
 }

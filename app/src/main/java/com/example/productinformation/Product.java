@@ -17,23 +17,23 @@ public class Product implements Parcelable, Serializable {
     private String description;
     private String seller;
     private Double price;
-    private String image;
+    private int imageId;
 
-    public Product(int id, String name, String description, String seller, double price, String image){
+    public Product(int id, String name, String description, String seller, double price, int imageId){
         this.id = id;
         this.name = name;
         this.description = description;
         this.seller = seller;
         this.price = price;
-        this.image = image;
+        this.imageId = imageId;
     }
 
-    public Product(String name, String description, String seller, double price, String image){
+    public Product(String name, String description, String seller, double price, int imageId){
         this.name = name;
         this.description = description;
         this.seller = seller;
         this.price = price;
-        this.image = image;
+        this.imageId = imageId;
     }
 
     public Product(Parcel in) {
@@ -42,7 +42,7 @@ public class Product implements Parcelable, Serializable {
         this.description = in.readString();
         this.seller = in.readString();
         this.price = in.readDouble();
-        this.image = in.readString();
+        this.imageId = in.readInt();
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -69,7 +69,7 @@ public class Product implements Parcelable, Serializable {
         parcel.writeString(this.description);
         parcel.writeString(this.seller);
         parcel.writeDouble(this.price);
-        parcel.writeString(this.image);
+        parcel.writeInt(this.imageId);
     }
 
     public Integer getId(){
@@ -92,7 +92,7 @@ public class Product implements Parcelable, Serializable {
         return this.price;
     }
 
-    public String getImage(){
-        return this.image;
+    public int getImageId(){
+        return this.imageId;
     }
 }
